@@ -168,10 +168,16 @@
 
   };
 
-  /**
-   * Underscore integration
-   */
-  root._ = root._ || {};
-  root._.mixin( inflector.resetInflections( ) );
-  
-} )( this | window );
+  if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = inflector.resetInflections();
+    }
+  } else if (typeof define === 'function' && define.amd) {
+    define('underscore.inflector', function() {
+      return inflector.resetInflections();
+    });
+  } else {
+    root._ = root._ || {};
+    root._.mixin( inflector.resetInflections() );
+  } 
+} )( this || window );
