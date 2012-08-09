@@ -174,4 +174,4 @@
   root._ = root._ || {};
   root._.mixin( inflector.resetInflections( ) );
   
-} )( this );
+} )( this | window );
