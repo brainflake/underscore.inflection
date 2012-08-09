@@ -4,7 +4,7 @@
 //  Portions of Underscore.inflection are inspired or borrowed from ActiveSupport
 //  Version 1.0.0
 
-( function( _, undefined )
+( function( root, undefined )
 {
   /**
    * Inflector
@@ -171,8 +171,7 @@
   /**
    * Underscore integration
    */
-  if (typeof(_) != 'undefined') {
-    _.mixin( inflector.resetInflections( ) );
-  }
+  root._ = root._ || {};
+  root._.mixin( inflector.resetInflections( ) );
   
-} )( _ );
+} )( this );
