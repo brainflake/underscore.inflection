@@ -40,20 +40,21 @@
       }
       else
       {
-        if( _( this.uncountables ).include( word ) )
-        {
-          return word;
+        for (var i=0; i < this.uncountables.length; i++) {
+          if (this.uncountables[i] == word) {
+            return word;
+          }
         }
 
         result = word;
 
-        _( this.plurals ).detect( function( rule )
-        {
-          var gsub = this.gsub( word, rule[ 0 ], rule[ 1 ] );
-
-          return gsub ? ( result = gsub ) : false;
-        },
-        this );
+        for (var i=0; i < this.plurals.length; i++) {
+          var gsub = this.gsub(word, this.plurals[i][0], this.plurals[i][1]);
+          if (gsub) {
+            result = gsub;
+            return result;
+          }
+        }
       }
       
       return result;
@@ -66,20 +67,21 @@
 
     singularize : function( word )
     {
-      if( _( this.uncountables ).include( word ) )
-      {
-        return word;
+      for (var i=0; i < this.uncountables.length; i++) {
+        if (this.uncountables[i] == word) {
+          return word;
+        }
       }
 
       var result = word;
 
-      _( this.singulars ).detect( function( rule )
-      {
-        var gsub = this.gsub( word, rule[ 0 ], rule[ 1 ] );
-
-        return gsub ? ( result = gsub ) : false;
-      },
-      this );
+      for (var i=0; i < this.singulars.length; i++) {
+        var gsub = this.gsub(word, this.singulars[i][0], this.singulars[i][1]);
+        if (gsub) {
+          result = gsub;
+          return result;
+        }
+      }
 
       return result;
     },
@@ -156,11 +158,10 @@
       this.irregular( 'move',   'moves'    );
       this.irregular( 'cow',    'kine'     );
 
-      _( 'equipment information rice money species series fish sheep jeans'.split( /\s+/ ) ).each( function( word )
-      {
-        this.uncountable( word );
-      },
-      this );
+      var uncountables = 'equipment information rice money species series fish sheep jeans'.split( /\s+/ );
+      for (var i=0; i < uncountables.length; i++) {
+        this.uncountable( uncountables[i] );
+      }
 
       return this;
     }
@@ -170,6 +171,8 @@
   /**
    * Underscore integration
    */
-  _.mixin( inflector.resetInflections( ) );
+  if (typeof(_) != 'undefined') {
+    _.mixin( inflector.resetInflections( ) );
+  }
   
 } )( _ );
